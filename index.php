@@ -3,58 +3,98 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1,minimum-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Flappy Bird 成绩生成器，1xx生成效果最好</title>
+    <title>Flappy Bird 成绩生成器，数字太大没人信 =.=!</title>
     <style>
-        html,body{margin:0;padding:0;}
+        html, body{
+            margin  :0;
+            padding :0;
+        }
     </style>
 </head>
 
 <body style="width:320px;">
 <?php
-if(!empty($_POST['sub'])){
+if (!empty($_POST['sub'])) {
     $txt = $_POST['con'];
 } else {
     $txt = "102";
 }
-$im = imagecreatefromjpeg("bg.jpg");
-$color = imagecolorallocate($im, 254, 254, 254);
-$color2 = imagecolorallocate($im, 2, 2, 2);
-$x = 428;
-$y = 412;
-imagettftext($im, 46, 0, $x - 3, $y - 3, $color2, "04B_19__.TTF", $txt);
-imagettftext($im, 46, 0, $x + 3, $y - 3, $color2, "04B_19__.TTF", $txt);
-imagettftext($im, 46, 0, $x - 3, $y + 3, $color2, "04B_19__.TTF", $txt);
-imagettftext($im, 46, 0, $x + 3, $y + 3, $color2, "04B_19__.TTF", $txt);
-imagettftext($im, 46, 0, $x, $y, $color, "04B_19__.TTF", $txt);
 
-imagettftext($im, 46, 0, $x - 3, $y - 3 + 98, $color2, "04B_19__.TTF", $txt);
-imagettftext($im, 46, 0, $x + 3, $y - 3 + 98, $color2, "04B_19__.TTF", $txt);
-imagettftext($im, 46, 0, $x - 3, $y + 3 + 98, $color2, "04B_19__.TTF", $txt);
-imagettftext($im, 46, 0, $x + 3, $y + 3 + 98, $color2, "04B_19__.TTF", $txt);
-imagettftext($im, 46, 0, $x, $y + 98, $color, "04B_19__.TTF", $txt);
+$im = imagecreatefromjpeg("./img/bg.jpg");
+
+if ($txt >= 10 && $txt < 20) {
+    $medal = imagecreatefromjpeg("./img/bronze.jpg");
+    imagecopy($im, $medal, 126, 384, 0, 0, 99, 102);
+    imagedestroy($medal);
+} elseif ($txt >= 20 && $txt < 30) {
+    $medal = imagecreatefromjpeg("./img/silver.jpg");
+    imagecopy($im, $medal, 126, 384, 0, 0, 99, 102);
+    imagedestroy($medal);
+} elseif ($txt >= 30 && $txt < 40) {
+    $medal = imagecreatefromjpeg("./img/gold.jpg");
+    imagecopy($im, $medal, 126, 384, 0, 0, 99, 102);
+    imagedestroy($medal);
+} elseif ($txt >= 40) {
+    $medal = imagecreatefromjpeg("./img/platinum.jpg");
+    imagecopy($im, $medal, 126, 384, 0, 0, 99, 102);
+    imagedestroy($medal);
+}
+
+function score($t, $x, $im)
+{
+    $color = imagecolorallocate($im, 254, 254, 254);
+    $color2 = imagecolorallocate($im, 2, 2, 2);
+    $size = 36;
+    $font = "./04B_19__.TTF";
+    $y = 408;
+    $yy = 93;
+    $z = 3;
+    imagettftext($im, $size, 0, $x - $z, $y - $z, $color2, $font, $t);
+    imagettftext($im, $size, 0, $x + $z, $y - $z, $color2, $font, $t);
+    imagettftext($im, $size, 0, $x - $z, $y + $z, $color2, $font, $t);
+    imagettftext($im, $size, 0, $x + $z, $y + $z, $color2, $font, $t);
+    imagettftext($im, $size, 0, $x, $y, $color, $font, $t);
+
+    imagettftext($im, $size, 0, $x - $z, $y - $z + $yy, $color2, $font, $t);
+    imagettftext($im, $size, 0, $x + $z, $y - $z + $yy, $color2, $font, $t);
+    imagettftext($im, $size, 0, $x - $z, $y + $z + $yy, $color2, $font, $t);
+    imagettftext($im, $size, 0, $x + $z, $y + $z + $yy, $color2, $font, $t);
+    imagettftext($im, $size, 0, $x, $y + $yy, $color, $font, $t);
+}
+
+for ($i = 1; $i <= strlen($txt); $i++) {
+    $txt0 = substr($txt, -$i, 1);
+    if ($txt0 == 1) {
+        score($txt0, 504 - (($i - 1) * 35), $im);
+    } else {
+        score($txt0, 494 - (($i - 1) * 35), $im);
+    }
+
+}
+
 imagejpeg($im, $txt . ".jpg");
 imagedestroy($im);
 ?>
 
-<form action="" method="post">
-    请输入数字(1xx生成效果最好)：<input type="number" name="con"> <input type="submit" name="sub" value="生成">
+<form action="" method="post" style="padding:8px 0 0 8px;">
+    请输入数字(数字太大没人信 =.=!)：<input type="number" name="con"> <input type="submit" name="sub" value=">生成<">
     <button type="button" id="share">分享！</button>
 </form>
 <img src="<?php echo $txt . ".jpg"; ?>" style="width:100%;">
 
-<script type="text/javascript" src="http://openapi.baidu.com/widget/social/1.0/share.js"> </script>
+<script type="text/javascript" src="http://openapi.baidu.com/widget/social/1.0/share.js"></script>
 <script type="text/javascript">
     var config = {
-        "afterRender":function(){
+        "afterRender": function () {
             //your code
         },
-        "client_id":"Hp0uI5gp0BuS3i88PHGpU5XZ",
-        "dom_id":"share",
-        "content":"颤抖吧！！！挑战我吧！！！",
-        "theme":"native",
-        "u":encodeURIComponent("http://bird.misuisui.com/"),
-        "url":encodeURIComponent("http://bird.misuisui.com/"),
-        "pic_url":encodeURIComponent("http://bird.misuisui.com/<?php echo $txt . ".jpg"; ?>")
+        "client_id"  : "Hp0uI5gp0BuS3i88PHGpU5XZ",
+        "dom_id"     : "share",
+        "content"    : "颤抖吧！！！挑战我吧！！！",
+        "theme"      : "native",
+        "u"          : encodeURIComponent("http://bird.misuisui.com/"),
+        "url"        : encodeURIComponent("http://bird.misuisui.com/"),
+        "pic_url"    : encodeURIComponent("http://bird.misuisui.com/<?php echo $txt . ".jpg"; ?>")
     };
     baidu.socShare.init(config);
 </script>
