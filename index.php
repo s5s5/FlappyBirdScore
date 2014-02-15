@@ -19,25 +19,43 @@ if (!empty($_POST['sub'])) {
 } else {
     $txt = "102";
 }
+$filename = './' . $txt . '.jpg';
 
-$im = imagecreatefromjpeg("./img/bg.jpg");
+if (file_exists($filename) == false) {
 
-if ($txt >= 10 && $txt < 20) {
-    $medal = imagecreatefromjpeg("./img/bronze.jpg");
-    imagecopy($im, $medal, 126, 384, 0, 0, 99, 102);
-    imagedestroy($medal);
-} elseif ($txt >= 20 && $txt < 30) {
-    $medal = imagecreatefromjpeg("./img/silver.jpg");
-    imagecopy($im, $medal, 126, 384, 0, 0, 99, 102);
-    imagedestroy($medal);
-} elseif ($txt >= 30 && $txt < 40) {
-    $medal = imagecreatefromjpeg("./img/gold.jpg");
-    imagecopy($im, $medal, 126, 384, 0, 0, 99, 102);
-    imagedestroy($medal);
-} elseif ($txt >= 40) {
-    $medal = imagecreatefromjpeg("./img/platinum.jpg");
-    imagecopy($im, $medal, 126, 384, 0, 0, 99, 102);
-    imagedestroy($medal);
+    $im = imagecreatefromjpeg("./img/bg.jpg");
+
+    if ($txt >= 10 && $txt < 20) {
+        $medal = imagecreatefromjpeg("./img/bronze.jpg");
+        imagecopy($im, $medal, 126, 384, 0, 0, 99, 102);
+        imagedestroy($medal);
+    } elseif ($txt >= 20 && $txt < 30) {
+        $medal = imagecreatefromjpeg("./img/silver.jpg");
+        imagecopy($im, $medal, 126, 384, 0, 0, 99, 102);
+        imagedestroy($medal);
+    } elseif ($txt >= 30 && $txt < 40) {
+        $medal = imagecreatefromjpeg("./img/gold.jpg");
+        imagecopy($im, $medal, 126, 384, 0, 0, 99, 102);
+        imagedestroy($medal);
+    } elseif ($txt >= 40) {
+        $medal = imagecreatefromjpeg("./img/platinum.jpg");
+        imagecopy($im, $medal, 126, 384, 0, 0, 99, 102);
+        imagedestroy($medal);
+    }
+
+    for ($i = 1; $i <= strlen($txt); $i++) {
+        $txt0 = substr($txt, -$i, 1);
+        if ($txt0 == 1) {
+            score($txt0, 504 - (($i - 1) * 35), $im);
+        } else {
+            score($txt0, 494 - (($i - 1) * 35), $im);
+        }
+
+    }
+
+    imagejpeg($im, $txt . ".jpg");
+    imagedestroy($im);
+
 }
 
 function score($t, $x, $im)
@@ -61,19 +79,6 @@ function score($t, $x, $im)
     imagettftext($im, $size, 0, $x + $z, $y + $z + $yy, $color2, $font, $t);
     imagettftext($im, $size, 0, $x, $y + $yy, $color, $font, $t);
 }
-
-for ($i = 1; $i <= strlen($txt); $i++) {
-    $txt0 = substr($txt, -$i, 1);
-    if ($txt0 == 1) {
-        score($txt0, 504 - (($i - 1) * 35), $im);
-    } else {
-        score($txt0, 494 - (($i - 1) * 35), $im);
-    }
-
-}
-
-imagejpeg($im, $txt . ".jpg");
-imagedestroy($im);
 ?>
 
 <form action="" method="post" style="padding:8px 0 0 8px;">
@@ -97,6 +102,16 @@ imagedestroy($im);
         "pic_url"    : encodeURIComponent("http://bird.misuisui.com/<?php echo $txt . ".jpg"; ?>")
     };
     baidu.socShare.init(config);
+</script>
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-53081-6', 'misuisui.com');
+    ga('send', 'pageview');
+
 </script>
 </body>
 </html>
