@@ -95,7 +95,7 @@ function score($t, $x, $im)
 </form>
 <img src="<?php echo $txt . ".jpg"; ?>" style="width:100%;">
 <script>
-    if(navigator.language == "zh-CN"){
+    if(navigator.language == "zh-CN" || navigator.language == "zh-cn"){
         var tit = document.getElementById('tit'),
             txt = document.getElementById('txt'),
             sub = document.getElementById('sub');
