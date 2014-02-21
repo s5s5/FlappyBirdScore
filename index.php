@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1,minimum-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Flappy Bird 成绩生成器，数字太大没人信 =.=!</title>
+    <title id="tit">Flappy Bird Scores Builder. Nobody believed big numbers =.=!</title>
     <style>
         html, body{
             margin  :0;
@@ -82,27 +82,30 @@ function score($t, $x, $im)
 ?>
 
 <form action="" method="post" style="padding:8px 0 0 8px;">
-    请输入数字(数字太大没人信 =.=!)：<input type="number" name="con"> <input type="submit" name="sub" value=">生成<">
-    <button type="button" id="share">分享！</button>
+    <span id="txt">Enter Number (Flappy Bird Scores =.=!):<br></span>
+    <input type="number" name="con"> <input type="submit" name="sub" value="Generate" id="sub">
+    <div class="addthis_toolbox addthis_default_style addthis_32x32_style" style="margin-top:8px;">
+        <a class="addthis_button_facebook"></a>
+        <a class="addthis_button_twitter"></a>
+        <a class="addthis_button_google_plusone_share"></a>
+        <a class="addthis_button_qzone"></a>
+        <a class="addthis_button_sinaweibo"></a>
+        <a class="addthis_button_compact"></a><a class="addthis_counter addthis_bubble_style"></a>
+    </div>
 </form>
 <img src="<?php echo $txt . ".jpg"; ?>" style="width:100%;">
-
-<script type="text/javascript" src="http://openapi.baidu.com/widget/social/1.0/share.js"></script>
-<script type="text/javascript">
-    var config = {
-        "afterRender": function () {
-            //your code
-        },
-        "client_id"  : "Hp0uI5gp0BuS3i88PHGpU5XZ",
-        "dom_id"     : "share",
-        "content"    : "颤抖吧！！！挑战我吧！！！",
-        "theme"      : "native",
-        "u"          : encodeURIComponent("http://bird.misuisui.com/"),
-        "url"        : encodeURIComponent("http://bird.misuisui.com/"),
-        "pic_url"    : encodeURIComponent("http://bird.misuisui.com/<?php echo $txt . ".jpg"; ?>")
-    };
-    baidu.socShare.init(config);
+<script>
+    if(navigator.language == "zh-CN"){
+        var tit = document.getElementById('tit'),
+            txt = document.getElementById('txt'),
+            sub = document.getElementById('sub');
+        tit.innerHTML = "Flappy Bird 成绩生成器，数字太大没人信 =.=!";
+        txt.innerHTML = "请输入数字(数字太大没人信 =.=!)：";
+        sub.value = ">生成<";
+    }
 </script>
+<script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5306b4ed48657515"></script>
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
